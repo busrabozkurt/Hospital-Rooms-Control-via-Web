@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html>
+    <head>
+		<script src="jquery-3.5.0.min.js"></script>
+		<meta charset="UTF-8" />
+        <title>Oda Seviye Durum</title>
+        <script>
+			if((JSON.parse(window.localStorage.getItem('login')) || false)){
+				console.log('tekrar giriş yapildi');
+			} else {
+				window.location.href = '/index.htm';
+			}
+		gonder  = "";
+
+		function dataal()
+		{
+			window.jQuery.ajax({
+            url: "/izosayfa.htm",
+            type: "POST",
+            data: "/sifre=" + "dataal"+ "/",
+			datatype: "xml",
+            success: function (res) {
+              if (res.toString().indexOf("veli") !== -1) {
+				  var count=1;
+				  restext= res.toString();
+				  var count;
+				var xml= ($.parseXML(res));
+				num_an = xml.getElementsByTagName('LED').length;	
+				for(var count = 0; count < num_an; count++) {
+
+						if (xml.getElementsByTagName('LED')[count].childNodes[0].nodeValue === "1") {
+						document.getElementsByName("radgroup"+count)[0].checked = true;
+						}
+						else {
+						document.getElementsByName("radgroup"+count)[0].checked = false;
+						}
+				}
+                alert("Cevap Geldi");
+                setTimeout(function () {
+                }, 1000);
+              } else {
+                alert("Cevap Gelemedi!");
+                console.log("Cevap Gelemedi!");
+              }
+            },
+          });
+        }
+		function guncelle() {
+		nocache = "&nocache=" + Math.random() * 1000000;
+		
+		var radgroup = [];
+		var radgroupsayi = 75;
+		for (k = 0; k < radgroupsayi; k++) {
+		  radgroup = document.getElementsByName("radgroup" + k)[0];
+		    if (radgroup.checked) {
+		    	gonder += "1";
+			}
+			else{
+					gonder +="0";
+				}
+			}
+			gonder = gonder;
+			alert(gonder);
+			
+			window.jQuery.ajax({
+				url: "/izosayfa.htm",
+				type: "POST",
+				data: "/sifre=" + "guncelle"+ "/"+gonder+"/",
+				datatype: "xml",
+				success: function (res) {
+				if (res.toString().indexOf("iso") !== -1) {
+					
+					alert("güncellendi");
+					setTimeout(function () {
+					}, 1000);
+				} else {
+					alert("Güncellenemedi!!!");
+					console.log("Güncellenemedi!!!");
+				}
+				},
+			});
+			gonder="";
+			}
+
+	
+	</script>
+	<style>
+		.IO_box {
+			float: left;
+			margin: 0 10px 10px 0;
+			border: 1px solid blue;
+			padding: 2 2px 2 2px;
+			width: 120px;
+		}
+		h1 {
+			font-size: 120%;
+			color: blue;
+		
+		}
+		p, form, button {
+			font-size: 80%;
+			color: #252525;
+		}
+		.small_text {
+			font-size: 70%;
+			color: #737373;
+		}
+		body {
+        background-color: azure;
+      }
+      h1 {
+        font-size: medium;
+        font-family: "Poppins", sans-serif;
+        text-align: center;
+      }
+      .grid-container {
+        width: 800px;
+        display: grid;
+        float: flex;
+        grid-gap: 8px;
+        grid-template-columns: repeat(13, 93px);
+        padding: 0px;
+        margin: 25px;
+        border-radius: 5px;
+      }
+      .block {
+        display: block;
+      }
+      fieldset.imgGroup {
+        float: left;
+        margin-left: 0%;
+        color: #333;
+      }
+      fieldset.imgGroup label {
+        display: inline;
+        margin: auto;
+      }
+      fieldset.imgGroup img {
+        float: none;
+        margin: 0px;
+        width: 20px;
+        vertical-align: left;
+        margin: 0px;
+      }
+      #btnOnayla {
+        margin: 0px;
+        padding: 0px;
+        color: rgb(255, 255, 255);
+        background-color: rgb(112, 90, 90);
+        font-family: "Poppins", sans-serif;
+        font-size: 1.1rem;
+        border-radius: 8px;
+        cursor: pointer;
+        padding: 0.25rem 0.25rem;
+      }
+      #btnOnayla:hover {
+        background-color: rgb(192, 90, 90);
+        opacity: 1.2;
+      }
+	</style>
+    </head>
+    <body onload="dataal()">
+		<div class="row">
+			<div class="column">
+			  <div class="grid-container">
+				<div>
+				  <h1>Oda 1</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup0" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup1" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup2" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup3" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup4" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>
+				</div>
+				<div>
+				  <h1>Oda 2</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup5" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup6" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup7" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup8" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup9" value="5" />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>
+				 
+				</div>
+				<div>
+				  <h1>Oda 3</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup10" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup11" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup12" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup13" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup14" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>
+				</div>
+				<div>
+				  <h1>Oda 4</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup15" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup16" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup17" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup18" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup19" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>
+				</div>
+				<div>
+				  <h1>Oda 5</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup20" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup21" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup22" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup23" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup24" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 6</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup25" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup26" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup27" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup28" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup29" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 7</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup30" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup31" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup32" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup33" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup34" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 8</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup35" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup36" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup37" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup38" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup39" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 9</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup40" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup41" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup42" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup43" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup44" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 10</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup45" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup46" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup47" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup48" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup49" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 11</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup50" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup51" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup52" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup53" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup54" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 12</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup55" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup56" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup57" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup58" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup59" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 13</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup60" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup61" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup62" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup63" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup64" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 14</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup65" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup66" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup67" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup68" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup69" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>				  
+				</div>
+				<div>
+				  <h1>Oda 15</h1>
+				  <hr
+					noshade="noshade"
+					style="width: 95%; text-align: left; margin-left: 0;"
+				  />
+				  <div>
+					<fieldset id="Images" class="imgGroup">
+					  <label class="block"
+						><input type="checkbox" name="radgroup70" value="1"  />
+						<img src="no1.jpg"
+					  /></label>
+	  
+					  <label class="block"
+						><input type="checkbox" name="radgroup71" value="2"  />
+						<img src="no2.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup72" value="3"  />
+						<img src="no3.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup73" value="4"  />
+						<img src="no4.jpg"
+					  /></label>
+					  <label class="block"
+						><input type="checkbox" name="radgroup74" value="5"  />
+						<img src="no5.jpg"
+					  /></label>
+					</fieldset>
+					<label class="block">
+				  </div>
+				  <button onclick="guncelle()" type="button" id="btnOnayla">Güncelle</button>
+				</div>				
+			  </div>
+			</div>
+		  </div>
+    </body>
+</html>
+

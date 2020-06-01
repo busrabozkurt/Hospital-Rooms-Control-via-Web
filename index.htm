@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Giriş Sayfası</title>
+    <style>
+      body {
+        background-color: azure;
+        margin: 0px;
+        padding: 0px;
+      }
+      .box h1 {
+        color: rgb(255, 255, 255);
+        font-size: xx-large;
+        text-transform: uppercase;
+      }
+      .box {
+        width: 500px;
+        padding: 90px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #383636;
+        text-align: center;
+      }
+      .box input[type="password"] {
+        text-align: center;
+        font-size: 20px;
+        border: 0px;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        border: 2px solid #bed8e2;
+        padding: 10px 10px;
+        width: 200px;
+        outline: none;
+        color: white;
+        border-radius: 24px;
+        transition: 0.25s;
+      }
+      .box input[type="password"]:focus {
+        width: 280px;
+        border-color: rgb(155, 252, 168);
+      }
+      .box input[type="submit"] {
+        text-align: center;
+        font-size: 20px;
+        border: 0px;
+        background: none;
+        display: block;
+        margin: 20px auto;
+        border: 2px solid rgb(155, 252, 168);
+        padding: 14px 40px;
+        outline: none;
+        color: white;
+        border-radius: 24px;
+        transition: 0.25s;
+        cursor: pointer;
+      }
+      .box input[type="submit"]:hover {
+        background: rgb(155, 252, 168);
+      }
+    </style>
+    <script src="jquery-3.5.0.min.js"></script>
+  </head>
+  <body>
+    <div id="search-theme-form" class="box">
+      <h1>Login</h1>
+      <hr />
+      <input type="password" id="ps" placeholder="Sifreyi giriniz.." />
+      <input type="submit" onclick="onayla()" value="Giriş" />
+    </div>
+    <script>
+      strLED1 = "";
+      strLED2 = "";
+      gonder = "";
+      password = "";
+      var LED3_state = 0;
+      var LED4_state = 0;
+      function onayla() {
+        password = document.getElementById("ps").value;
+        if (password == "") {
+          alert("Lütfen sifre giriniz!");
+          return false;
+        } else {
+          // send HTTP GET request with LEDs to switch on/off if any
+        
+          //request.open("POST","/sifre=" + password + nocache, true);
+          //request.send(null);
+          //setTimeout(10000);
+          //password  = "";
+          //return true;
+
+          window.jQuery.ajax({
+            url: "/izosayfa.htm",
+            type: "POST",
+            data: "/sifre=" + password+ "/",
+            success: function (res) {
+              if (res.toString().indexOf("success") !== -1) {
+                window.localStorage.setItem("login", true);
+                setTimeout(function () {
+                  window.location.href = "/izosayfa.htm";
+                }, 1000);
+              } else {
+                alert("Yanlış Şifre Girdiniz!");
+                console.log("Sifre Yanlis!");
+              }
+            },
+          });
+        }
+      }
+
+      /* if((JSON.parse(window.localStorage.getItem('login')) || false)){
+          window.location.href = 'izosayfa.htm';
+        }*/
+    </script>
+  </body>
+</html>
