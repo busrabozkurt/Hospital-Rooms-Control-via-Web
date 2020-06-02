@@ -83,12 +83,12 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         print("post a girdi") 
         sfr = body.decode().split("sifre=")[1].split('/')[0]
         print('sfr:'+sfr)
-        if sfr == "izo123":
+        if sfr == "password":
             response.write(b'success')
             self.wfile.write(response.getvalue())
             print(response.getvalue().decode())
 
-        if sfr == "dataal":
+        if sfr == "getdatakey":
             print("xml gonderiyor")
             dene=oku().encode()
             print(oku())
@@ -96,7 +96,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             #response.write(body)
             self.wfile.write(response.getvalue())
             #self.wfile.write("POST request for {}".format(self.path).encode('utf-8'))
-        if sfr == "guncelle":
+        if sfr == "refreshkey":
             print("kontrol edilecek")
             gelen= body.decode().split("guncelle/")[1].split('/')[0]
             print(gelen[0])
